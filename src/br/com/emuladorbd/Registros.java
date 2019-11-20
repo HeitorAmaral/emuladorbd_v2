@@ -68,7 +68,7 @@ public class Registros {
 			System.out.println("Insira o MODELO: ");
 			veiculo.modelo = scanner.nextLine();
 			System.out.println("Insira a PLACA: ");
-			veiculo.placa = scanner.nextLine();
+			veiculo.placa = scanner.nextLine().toUpperCase();
 			System.out.println("Dados de VEÍCULO completos! Deseja cadastrar um novo veículo para o " + pessoa.nome
 					+ "? (N para NÃO, S para SIM)");
 			itemSelecionado = scanner.nextLine();
@@ -86,11 +86,6 @@ public class Registros {
 		File file = new File("C:\\RegistrosEmuladorBD\\Registros.bin");
 		try (InputStream inputStream = new FileInputStream(file)) {
 			int content;
-			/*
-			 * controla qual o dado que esta sendo manipulado (& @ # $ %) # = separação de
-			 * dados do mesmo tipo $ = inicia um bloco com dados de endereco % = inicia um
-			 * bloco com dados de veiculo & = separação de pessoa
-			 */
 			String controle = "";
 			String dado = "";
 			int contadorEndereco = 0;
@@ -158,12 +153,6 @@ public class Registros {
 						if ((char) content == '#') {
 							contadorEndereco++;
 						}
-						/*
-						 * SE contador endereço for ==0 eu sei que esta inserindo rua SE contador
-						 * endereço for ==1 eu sei que esta inserindo numero SE contador endereço for
-						 * ==2 eu sei que esta inserindo bairro SE contador endereço for ==3 eu sei que
-						 * esta inserindo cidade
-						 */
 						if (contadorEndereco == 0) {
 							if ((char) content != '#')
 								endereco.rua += String.valueOf((char) content);
@@ -191,10 +180,6 @@ public class Registros {
 						if ((char) content == '#') {
 							contadorVeiculo++;
 						}
-						/*
-						 * SE contador veiculo for ==1 eu sei que esta inserindo modelo SE contador
-						 * veiculo for ==2 eu sei que esta inserindo placa
-						 */
 						if (contadorVeiculo == 0) {
 							if ((char) content != '#')
 								veiculo.modelo += String.valueOf((char) content);
@@ -228,11 +213,6 @@ public class Registros {
 	}
 
 	public static void saveFile(List<Pessoa> listPessoa) {
-
-		/*
-		 * # = separação de dados do mesmo tipo $ = inicia um bloco com dados de
-		 * endereco % = inicia um bloco com dados de veiculo & = separação de pessoa
-		 */
 		List<Endereco> listEndereco;
 		List<Veiculo> listVeiculo;
 		File file = new File("C:\\RegistrosEmuladorBD\\Registros.bin");
@@ -283,7 +263,7 @@ public class Registros {
 			String nome = "";
 			System.out.println("Insira o nome da pessoa que você deseja alterar: ");
 			nome = scanner.nextLine();
-			int option = 0;
+			String option = "";
 			for (Pessoa pessoa : listPessoa) {
 				if (pessoa.nome.equals(nome)) {
 					System.out.println("**********************************************");
@@ -295,18 +275,18 @@ public class Registros {
 					System.out.println("1 - Nome da Pessoa");
 					System.out.println("2 - Endereço da Pessoa");
 					System.out.println("3 - Veículo da Pessoa");
-					option = scanner.nextInt();
+					option = scanner.nextLine();
 					scanner.nextLine();
 					String itemSelecionado;
 					switch (option) {
-					case 1:
+					case "1":
 						System.out.println("\nInsira o novo NOME da Pessoa: ");
 						pessoa.nome = scanner.nextLine();
 						System.out.println("Alteração realizada com sucesso!");
 						System.out.println(pessoa.toString());
 						break;
 
-					case 2:
+					case "2":
 						System.out.println("**********************************************");
 						System.out.println("Novos dados de Endereço a serem inseridos");
 						System.out.println("**********************************************");
@@ -335,10 +315,13 @@ public class Registros {
 							itemSelecionado = scanner.nextLine();
 
 							pessoa.listEndereco.add(endereco);
+
 						}
+						System.out.println("Alteração realizada com sucesso!");
+						System.out.println(pessoa.toString());
 						break;
 
-					case 3:
+					case "3":
 						System.out.println("**********************************************");
 						System.out.println("Novos dados de Veículo a serem inseridos.");
 						System.out.println("**********************************************");
@@ -351,15 +334,16 @@ public class Registros {
 							System.out.println("\nInsira o novo MODELO: ");
 							veiculo.modelo = scanner.nextLine();
 							System.out.println("Insira a nova PLACA: ");
-							veiculo.placa = scanner.nextLine();
+							veiculo.placa = scanner.nextLine().toUpperCase();
 							System.out
 									.println("Dados do novo VEÍCULO completos! Deseja cadastrar um novo veículo para o "
 											+ pessoa.nome + "? (N para NÃO, S para SIM)");
 							itemSelecionado = scanner.nextLine();
 
 							pessoa.listVeiculo.add(veiculo);
-							System.out.println("Registro Removido!\n");
 						}
+						System.out.println("Alteração realizada com sucesso!");
+						System.out.println(pessoa.toString());
 						break;
 					default:
 						System.out.println("Digite novamente, a opção inserida deve ser de 1 á 3!");

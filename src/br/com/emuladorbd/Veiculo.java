@@ -18,7 +18,7 @@ public class Veiculo {
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Veículo: Modelo: " + modelo);
-		stringBuilder.append("\n\t\t  Placa: " + placa + "\n\n\t");
+		stringBuilder.append("\n\t\t  Placa: " + placa.toUpperCase() + "\n\n\t");
 		return stringBuilder.toString();
 	}
 }
