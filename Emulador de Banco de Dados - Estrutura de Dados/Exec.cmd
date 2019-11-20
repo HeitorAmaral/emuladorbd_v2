@@ -1,0 +1,1 @@
+java -jar EmuladorBancoDeDados_ED.jar
